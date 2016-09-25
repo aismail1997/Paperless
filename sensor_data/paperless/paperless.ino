@@ -78,7 +78,7 @@ LSM9DS1 imu;
 
 #define WAIT_TIME 500 //P half a second between each letter record 
 #define PRINT_SPEED 33 //P 33 ms between prints
-#define SAMPLES_PER_LETTER 30 //P vary this for taking more/less samples per letter
+#define SAMPLES_PER_LETTER 10 //P vary this for taking more/less samples per letter
 //P PRINT_SPEED should be set close to 1000 ms / SAMPLES_PER_LETTER
 
 // Earth's magnetic field varies by location. Add or subtract 
@@ -90,7 +90,7 @@ LSM9DS1 imu;
 void setup() 
 {
   
-  Serial.begin(115200);
+  Serial.begin(38400);
   
   // Before initializing the IMU, there are a few settings
   // we may need to adjust. Use the settings struct to set
@@ -174,7 +174,7 @@ void printAccel()
   
   // Now we can use the ax, ay, and az variables as we please.
   // Either print them as raw ADC values, or calculated in g's.
-  Serial.print("A "); //P removed comma
+  //Serial.print("A "); //P removed comma
 //#ifdef PRINT_CALCULATED
   // If you want to print calculated values, you can use the
   // calcAccel helper function to convert a raw ADC value to
@@ -186,11 +186,11 @@ void printAccel()
   //Serial.print(imu.calcAccel(imu.az), 2);
   //Serial.println(" g");
 //#elif defined PRINT_RAW 
-  Serial.print(imu.ax + 16000); //P add 16000 (?) offset to remove negatives
+  Serial.print(imu.ax + 35000); //P add 20000 (?) offset to remove negatives
   // Serial.print(", "); //P remove comma-delmiting
-  Serial.print(imu.ay + 16000);
+  Serial.print(imu.ay + 35000);
   // Serial.print(", ");
-  Serial.println(imu.az + 16000);
+  Serial.println(imu.az + 35000);
 //#endif
 
 }

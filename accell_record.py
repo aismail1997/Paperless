@@ -13,7 +13,9 @@ import serial #Import Serial Library
 # arduinoSerialData = serial.Serial('/dev/cu.usbmodem1421', 115200)
 
 # here is where we define the number of samples we'd like for each full letter
-samples_per_letter = 30
+samples_per_letter = 10
+
+arduinoSerialData = serial.Serial('com8', 38400)
 
 while (True):
     letter = raw_input('Enter the letter you wish to train. Press enter just before you begin drawing: ') # prompt for a letter
@@ -23,27 +25,28 @@ while (True):
         # if there is data ready to be retrieved
 
         with open(fname, 'w') as f:
-            
-            for line in range(0, 100):
-                
-                f.write(str(line + 1) + ' ') # write the line number
- 
+
+            for line in range(0, 110):
+
+                #f.write(str(line + 1) + ' ') # write the line number
+
                 # print the numeric string following the 'A' character, followed by a space
                 # do so for 30 values
-                
-                for value in range(0, 30):
-            	    
+
+                for value in range(0, 10):
+
             	    a_sample = arduinoSerialData.readline()
-                        
+                    print (a_sample + ' ')
                     if a_sample:
                         sample = a_sample.split()
-            		
-            		if sample[0] in 'A': # just an extra check
-                                f.write(str(sample[1]) + ' ')
-                    else:
-                        f.write('issue')
-                        break # abandon this sample
-            
+                        f.write(sample[0] + ' ')
+
+            		#if sample[0] in 'A': # just an extra check
+                    #            f.write(str(sample[1]) + ' ')
+                    #else:
+                    #    f.write('issue')
+                    #    break # abandon this sample
+
                 f.write('\n') # finish recording the line of samples
                 print 'next one'
 
@@ -71,4 +74,4 @@ while (True):
 #                     print url #sanity check
 #                     webbrowser.open_new(url)
 #                     time.sleep(5) #sleep for 5 seconds while the browser loads
-# 
+#
