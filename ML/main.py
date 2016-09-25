@@ -39,18 +39,18 @@ def ml_code(mydatapoint):
 	a = 0
 	mydatapoint = []
 	training_labels = ['C', 'O', 'T']
-	for value in training_labels
+	for value in training_labels:
 		b = 0
 		fname = training_labels[a] + '-data.txt'
 		with open(fname, 'r') as f:
 			for line in fname:
-				if (b > 10)
+				if (b > 10):
 					a_sample = fname.readline
-				    sample = a_sample.split()
+				        sample = a_sample.split()
 					mydatapoint.append(sample)
 		training_data.append(mydatapoint)
-		a++
-		b++
+		a = a + 1
+		b = b + 1
 
 	#for d in data:
 	#	ucr = d.get('ucr_general')
