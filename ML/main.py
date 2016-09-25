@@ -39,7 +39,7 @@ def ml_code(mydatapoint):
 	a = 0
 	mydatapoints = []
 	alphabet = ['C', 'O', 'T']
-	for value in alphabet
+	for value in alphabet:
 		b = 0
 		fname = alphabet[a] + '-data.txt'
 		with open(fname, 'r') as f:
