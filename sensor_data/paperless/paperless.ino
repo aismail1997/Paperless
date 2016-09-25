@@ -15,12 +15,12 @@ SFE_LSM9DS1 library. It'll demo the following:
   variables section).
 * How to use the begin() function of the LSM9DS1 class.
 * How to read the gyroscope, accelerometer, and magnetometer
-  using the readGryo(), readAccel(), readMag() functions and 
+  using the readGryo(), readAccel(), readMag() functions and
   the gx, gy, gz, ax, ay, az, mx, my, and mz variables.
-* How to calculate actual acceleration, rotation speed, 
-  magnetic field strength using the calcAccel(), calcGyro() 
+* How to calculate actual acceleration, rotation speed,
+  magnetic field strength using the calcAccel(), calcGyro()
   and calcMag() functions.
-* How to use the data from the LSM9DS1 to calculate 
+* How to use the data from the LSM9DS1 to calculate
   orientation and heading.
 
 Hardware setup: This library supports communicating with the
@@ -31,12 +31,12 @@ to use I2C. The pin-out is as follows:
 	 SDA ---------- SDA (A4 on older 'Duinos')
 	 VDD ------------- 3.3V
 	 GND ------------- GND
-(CSG, CSXM, SDOG, and SDOXM should all be pulled high. 
+(CSG, CSXM, SDOG, and SDOXM should all be pulled high.
 Jumpers on the breakout board will do this for you.)
 
 The LSM9DS1 has a maximum voltage of 3.6V. Make sure you power it
-off the 3.3V rail! I2C pins are open-drain, so you'll be 
-(mostly) safe connecting the LSM9DS1's SCL and SDA pins 
+off the 3.3V rail! I2C pins are open-drain, so you'll be
+(mostly) safe connecting the LSM9DS1's SCL and SDA pins
 directly to the Arduino.
 
 Development environment specifics:
@@ -44,8 +44,8 @@ Development environment specifics:
 	Hardware Platform: SparkFun Redboard
 	LSM9DS1 Breakout Version: 1.0
 
-This code is beerware. If you see me (or any other SparkFun 
-employee) at the local, and you've found our code helpful, 
+This code is beerware. If you see me (or any other SparkFun
+employee) at the local, and you've found our code helpful,
 please buy us a round!
 
 Distributed as-is; no warranty is given.
@@ -76,22 +76,22 @@ LSM9DS1 imu;
 #define PRINT_CALCULATED
 //#define PRINT_RAW
 
-#define WAIT_TIME 500 //P half a second between each letter record 
+#define WAIT_TIME 500 //P half a second between each letter record
 #define PRINT_SPEED 33 //P 33 ms between prints
 #define SAMPLES_PER_LETTER 10 //P vary this for taking more/less samples per letter
 //P PRINT_SPEED should be set close to 1000 ms / SAMPLES_PER_LETTER
 
-// Earth's magnetic field varies by location. Add or subtract 
-// a declination to get a more accurate heading. Calculate 
+// Earth's magnetic field varies by location. Add or subtract
+// a declination to get a more accurate heading. Calculate
 // your's here:
 // http://www.ngdc.noaa.gov/geomag-web/#declination
 #define DECLINATION -8.58 // Declination (degrees) in Boulder, CO.
 
-void setup() 
+void setup()
 {
-  
+
   Serial.begin(38400);
-  
+
   // Before initializing the IMU, there are a few settings
   // we may need to adjust. Use the settings struct to set
   // the device's communication mode and addresses:
@@ -111,27 +111,27 @@ void setup()
                   "if the board jumpers are.");
     while (1)
       ;
-  } 
+  }
 }
 
 void loop()
 {
   //P print SAMPLES_PER_LETTER samples every ~second
-  for(int i = 0; i < SAMPLES_PER_LETTER; i++) { 
+  for(int i = 0; i < SAMPLES_PER_LETTER; i++) {
     printAccel(); // Print "A axayaz"
     delay(PRINT_SPEED);
-  }  
+  }
 
   //printGyro();  // Print "G: gx, gy, gz"
   //printMag();   // Print "M: mx, my, mz"
-  
+
   // Print the heading and orientation for fun!
   // Call print attitude. The LSM9DS1's magnetometer x and y
   // axes are opposite to the accelerometer, so my and mx are
   // substituted for each other.
   // printAttitude(imu.ax, imu.ay, imu.az, -imu.my, -imu.mx, imu.mz);
   //Serial.println();
-  
+
   //P wait before producing the next set of samples
   delay(WAIT_TIME);
 }
@@ -142,7 +142,7 @@ void printGyro()
   // readGyro() function. When this exits, it'll update the
   // gx, gy, and gz variables with the most current data.
   imu.readGyro();
-  
+
   // Now we can use the gx, gy, and gz variables as we please.
   // Either print them as raw ADC values, or calculated in DPS.
   Serial.print("G, ");
@@ -171,7 +171,7 @@ void printAccel()
   // readAccel() function. When this exits, it'll update the
   // ax, ay, and az variables with the most current data.
   imu.readAccel();
-  
+
   // Now we can use the ax, ay, and az variables as we please.
   // Either print them as raw ADC values, or calculated in g's.
   //Serial.print("A "); //P removed comma
@@ -185,7 +185,7 @@ void printAccel()
   //Serial.print(", ");
   //Serial.print(imu.calcAccel(imu.az), 2);
   //Serial.println(" g");
-//#elif defined PRINT_RAW 
+//#elif defined PRINT_RAW
   Serial.print(imu.ax + 35000); //P add 20000 (?) offset to remove negatives
   // Serial.print(", "); //P remove comma-delmiting
   Serial.print(imu.ay + 35000);
@@ -201,7 +201,7 @@ void printMag()
   // readMag() function. When this exits, it'll update the
   // mx, my, and mz variables with the most current data.
   imu.readMag();
-  
+
   // Now we can use the mx, my, and mz variables as we please.
   // Either print them as raw ADC values, or calculated in Gauss.
   Serial.print("M: ");
@@ -233,24 +233,24 @@ void printAttitude(float ax, float ay, float az, float mx, float my, float mz)
 {
   float roll = atan2(ay, az);
   float pitch = atan2(-ax, sqrt(ay * ay + az * az));
-  
+
   float heading;
   if (my == 0)
     heading = (mx < 0) ? 180.0 : 0;
   else
     heading = atan2(mx, my);
-    
+
   heading -= DECLINATION * PI / 180;
-  
+
   if (heading > PI) heading -= (2 * PI);
   else if (heading < -PI) heading += (2 * PI);
   else if (heading < 0) heading += 2 * PI;
-  
+
   // Convert everything from radians to degrees:
   heading *= 180.0 / PI;
   pitch *= 180.0 / PI;
   roll  *= 180.0 / PI;
-  
+
   Serial.print("Pitch, Roll: ");
   Serial.print(pitch, 2);
   Serial.print(", ");
