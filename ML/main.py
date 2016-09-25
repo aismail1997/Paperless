@@ -14,7 +14,7 @@ def ml_code(mydatapoint):
 
 	a = 0
 	mydatapoints = []
-	alphabet = ['G', 'O', 'T']
+	alphabet = ['T']
 	for value in alphabet:
 		b = 0
 		fname = alphabet[a] + '-data.txt'
@@ -22,16 +22,19 @@ def ml_code(mydatapoint):
 			print 'Working with ' + fname + '\n'
 			for line in f:
 				if (b >= 10):
-					a_sample = line
-				        sample = a_sample.split()
-					mydatapoints.append(sample)
-				        training_data.append(mydatapoints)
-				        training_labels.append(alphabet)
+					sample = int(line)
+				        # sample = a_sample.split()
+					# mydatapoints.append(sample)
+				        training_data.append(sample)
+				        training_labels.append(a)
 				b+=1
 			a+=1
 
-	all_training_data = np.array(training_data)
+	all_training_data = np.array(training_data).reshape(-1, 1)
 	all_training_labels = np.array(training_labels)
+	print all_training_data.ndim
+	print all_training_labels.ndim
+		
 
 	#Split all the data points into training and testing data
 	features_train, features_test, labels_train, labels_test = cross_validation.train_test_split(all_training_data, all_training_labels, test_size=0.1, random_state=42)

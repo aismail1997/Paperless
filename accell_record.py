@@ -15,7 +15,7 @@ import serial #Import Serial Library
 # here is where we define the number of samples we'd like for each full letter
 samples_per_letter = 10
 
-arduinoSerialData = serial.Serial('com8', 38400)
+arduinoSerialData = serial.Serial('/dev/ttyACM0', 38400)
 
 while (True):
     letter = raw_input('Enter the letter you wish to train. Press enter just before you begin drawing: ') # prompt for a letter
@@ -39,7 +39,7 @@ while (True):
                     print (a_sample + ' ')
                     if a_sample:
                         sample = a_sample.split()
-                        f.write(sample[0] + ' ')
+                        f.write(sample[0])
 
             		#if sample[0] in 'A': # just an extra check
                     #            f.write(str(sample[1]) + ' ')
