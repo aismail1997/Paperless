@@ -40,9 +40,6 @@ def ml_code(mydatapoint):
 	mydatapoints = []
 	alphabet = ['C', 'O', 'T']
 	for value in alphabet
-	mydatapoint = []
-	training_labels = ['C', 'O', 'T']
-	for value in training_labels:
 		b = 0
 		fname = alphabet[a] + '-data.txt'
 		with open(fname, 'r') as f:
