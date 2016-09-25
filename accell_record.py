@@ -10,13 +10,13 @@ import serial #Import Serial Library
 # set the baudrate and serial port
 # The port will differ for Windows and Mac
 # not sure what these ports should be
-arduinoSerialData = serial.Serial('/dev/cu.usbmodem1421', 115200)
+# arduinoSerialData = serial.Serial('/dev/cu.usbmodem1421', 115200)
 
 # here is where we define the number of samples we'd like for each full letter
 samples_per_letter = 30
 
 while (True):
-    letter = input('Enter the letter you wish to train. Press enter just before you begin drawing: ') # prompt for a letter
+    letter = raw_input('Enter the letter you wish to train. Press enter just before you begin drawing: ') # prompt for a letter
     fname = letter + '-data.txt' # create a file for that letter
 
     if (arduinoSerialData.inWaiting() > 0):
@@ -35,13 +35,17 @@ while (True):
             	    
             	    a_sample = arduinoSerialData.readline()
                         
-                        if a_sample:
-                            sample = a_sample.split()
+                    if a_sample:
+                        sample = a_sample.split()
             		
             		if sample[0] in 'A': # just an extra check
                                 f.write(str(sample[1]) + ' ')
+                    else:
+                        f.write('issue')
+                        break # abandon this sample
             
                 f.write('\n') # finish recording the line of samples
+                print 'next one'
 
 
 # # reading from serial
