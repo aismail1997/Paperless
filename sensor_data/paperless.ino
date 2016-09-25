@@ -75,7 +75,11 @@ LSM9DS1 imu;
 ////////////////////////////
 #define PRINT_CALCULATED
 //#define PRINT_RAW
-#define PRINT_SPEED 250 // 250 ms between prints
+
+#define WAIT_TIME 500 //P half a second between each letter record 
+#define PRINT_SPEED 33 //P 33 ms between prints
+#define SAMPLES_PER_LETTER 30 //P vary this for taking more/less samples per letter
+//P PRINT_SPEED should be set close to 1000 ms / SAMPLES_PER_LETTER
 
 // Earth's magnetic field varies by location. Add or subtract 
 // a declination to get a more accurate heading. Calculate 
@@ -107,24 +111,29 @@ void setup()
                   "if the board jumpers are.");
     while (1)
       ;
-  }
+  } 
 }
 
 void loop()
 {
-  
-  printAccel(); // Print "A: ax, ay, az"
-  printGyro();  // Print "G: gx, gy, gz"
+  //P print SAMPLES_PER_LETTER samples every ~second
+  for(int i = 0; i < SAMPLES_PER_LETTER; i++) { 
+    printAccel(); // Print "A axayaz"
+    delay(PRINT_SPEED);
+  }  
+
+  //printGyro();  // Print "G: gx, gy, gz"
   //printMag();   // Print "M: mx, my, mz"
   
   // Print the heading and orientation for fun!
   // Call print attitude. The LSM9DS1's magnetometer x and y
   // axes are opposite to the accelerometer, so my and mx are
   // substituted for each other.
- // printAttitude(imu.ax, imu.ay, imu.az, -imu.my, -imu.mx, imu.mz);
+  // printAttitude(imu.ax, imu.ay, imu.az, -imu.my, -imu.mx, imu.mz);
   //Serial.println();
   
-  delay(PRINT_SPEED);
+  //P wait before producing the next set of samples
+  delay(WAIT_TIME);
 }
 
 void printGyro()
@@ -165,7 +174,7 @@ void printAccel()
   
   // Now we can use the ax, ay, and az variables as we please.
   // Either print them as raw ADC values, or calculated in g's.
-  Serial.print("A, ");
+  Serial.print("A "); //P removed comma
 //#ifdef PRINT_CALCULATED
   // If you want to print calculated values, you can use the
   // calcAccel helper function to convert a raw ADC value to
@@ -177,11 +186,11 @@ void printAccel()
   //Serial.print(imu.calcAccel(imu.az), 2);
   //Serial.println(" g");
 //#elif defined PRINT_RAW 
-  Serial.print(imu.ax);
-  Serial.print(", ");
-  Serial.print(imu.ay);
-  Serial.print(", ");
-  Serial.println(imu.az);
+  Serial.print(imu.ax + 16000); //P add 16000 (?) offset to remove negatives
+  // Serial.print(", "); //P remove comma-delmiting
+  Serial.print(imu.ay + 16000);
+  // Serial.print(", ");
+  Serial.println(imu.az + 16000);
 //#endif
 
 }
