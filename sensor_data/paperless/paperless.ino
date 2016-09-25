@@ -76,9 +76,9 @@ LSM9DS1 imu;
 #define PRINT_CALCULATED
 //#define PRINT_RAW
 
-#define WAIT_TIME 500 //P half a second between each letter record
-#define PRINT_SPEED 33 //P 33 ms between prints
-#define SAMPLES_PER_LETTER 10 //P vary this for taking more/less samples per letter
+// #define WAIT_TIME 500 //P half a second between each letter record
+#define PRINT_SPEED 3000 //P 3000 ms between prints (10 prints per 30 seconds)
+// #define SAMPLES_PER_LETTER 10 //P vary this for taking more/less samples per letter
 //P PRINT_SPEED should be set close to 1000 ms / SAMPLES_PER_LETTER
 
 // Earth's magnetic field varies by location. Add or subtract
@@ -117,10 +117,15 @@ void setup()
 void loop()
 {
   //P print SAMPLES_PER_LETTER samples every ~second
-  for(int i = 0; i < SAMPLES_PER_LETTER; i++) {
+  /* for(int i = 0; i < SAMPLES_PER_LETTER; i++) {
     printAccel(); // Print "A axayaz"
     delay(PRINT_SPEED);
   }
+  no longer collecting in bursts
+  */
+
+  printAccel();
+  delay(PRINT_SPEED);
 
   //printGyro();  // Print "G: gx, gy, gz"
   //printMag();   // Print "M: mx, my, mz"
@@ -133,7 +138,7 @@ void loop()
   //Serial.println();
 
   //P wait before producing the next set of samples
-  delay(WAIT_TIME);
+  // delay(WAIT_TIME);
 }
 
 void printGyro()
