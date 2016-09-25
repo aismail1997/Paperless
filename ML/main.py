@@ -7,7 +7,7 @@ from sklearn.svm import SVC
 from time import time
 import numpy as np
 
-def ml_code(mydatapoint,alphabet):
+def ml_code(mydatapoint):
 	#Inserted the API Key into the base URL. This ugly hack will work for now
 	#BASE_URL = "https://data.phila.gov/resource/sspu-uyfa.json?$$app_token=bF12rIkELtbJ8PXnuzuZTWmVF"
 
@@ -117,9 +117,11 @@ def ml_code(mydatapoint,alphabet):
 	print "The Accuracy Score is = " + str(round(accuracy * 100, 3)) + " %"
 	'''
 
+
 	#Test for a random time of the day
-	#prediction = classifier.predict(np.array([hour]).reshape(-1,1))
-	#print "The most likely crime (based on historical data) at this time of the day is = " + str(prediction)
+	#prediction = classifier.predict(np.array(newdata)))
+	#print str(prediction) + ' '
+
 
 	#weighted_number = (num_100*7 + num_200*6 + num_300*5 + num_400*4 + num_500*3 + num_600*2 + num_other*1)
 	#print "The weighted average number of crimes reported = " + str(weighted_number)
