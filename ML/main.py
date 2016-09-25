@@ -37,18 +37,19 @@ def ml_code(mydatapoint):
 	#num_600 = 0
 	#num_other = 0
 	a = 0
-	mydatapoint = []
-	training_labels = ['C', 'O', 'T']
-	for value in training_labels
+	mydatapoints = []
+	alphabet = ['C', 'O', 'T']
+	for value in alphabet
 		b = 0
-		fname = training_labels[a] + '-data.txt'
+		fname = alphabet[a] + '-data.txt'
 		with open(fname, 'r') as f:
 			for line in fname:
 				if (b > 10)
 					a_sample = fname.readline
 				    sample = a_sample.split()
-					mydatapoint.append(sample)
-		training_data.append(mydatapoint)
+					mydatapoints.append(sample)
+				training_data.append(mydatapoints)
+				training_labels.append(alphabet)
 		a++
 		b++
 
@@ -111,16 +112,16 @@ def ml_code(mydatapoint):
 
 	print "The training time was = " + str(training_time) + " seconds"
 
-	'''
+
 	#Use the testing data to find the accuracy of the model
 	accuracy = classifier.score(features_test, labels_test)
 	print "The Accuracy Score is = " + str(round(accuracy * 100, 3)) + " %"
-	'''
+
 
 
 	#Test for a random time of the day
-	#prediction = classifier.predict(np.array(newdata)))
-	#print str(prediction) + ' '
+	prediction = classifier.predict(np.array(mydatapoint)))
+	print str(prediction) + ' '
 
 
 	#weighted_number = (num_100*7 + num_200*6 + num_300*5 + num_400*4 + num_500*3 + num_600*2 + num_other*1)
