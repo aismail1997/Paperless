@@ -77,7 +77,7 @@ LSM9DS1 imu;
 //#define PRINT_RAW
 
 // #define WAIT_TIME 500 //P half a second between each letter record
-#define PRINT_SPEED 3000 //P 3000 ms between prints (10 prints per 30 seconds)
+#define PRINT_SPEED 100 //P 3000 ms between prints (10 prints per 30 seconds)
 // #define SAMPLES_PER_LETTER 10 //P vary this for taking more/less samples per letter
 //P PRINT_SPEED should be set close to 1000 ms / SAMPLES_PER_LETTER
 

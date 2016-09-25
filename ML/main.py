@@ -43,15 +43,16 @@ def ml_code(mydatapoint):
 		b = 0
 		fname = alphabet[a] + '-data.txt'
 		with open(fname, 'r') as f:
+			print 'Working with ' + fname + '\n'
 			for line in fname:
 				if (b > 10):
 					a_sample = fname.readline
-				    sample = a_sample.split()
+				        sample = a_sample.split()
 					mydatapoints.append(sample)
 				training_data.append(mydatapoints)
 				training_labels.append(alphabet)
-		a++
-		b++
+		a+=1
+		b+=1
 #				        sample = a_sample.split()
 #					mydatapoint.append(sample)
 #		training_data.append(mydatapoint)
@@ -125,7 +126,7 @@ def ml_code(mydatapoint):
 
 
 	#Test for a random time of the day
-	prediction = classifier.predict(np.array(mydatapoint)))
+	prediction = classifier.predict(np.array(mydatapoint))
 	print str(prediction) + ' '
 
 
